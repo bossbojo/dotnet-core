@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace NewApi
+namespace AppApi
 {
     /// <summary>
     /// Startup Class
@@ -44,12 +44,11 @@ namespace NewApi
             #region Swagger
             services.AddSwaggerGen(c =>
             {
-                var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + "NewApi.XML";
+                var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + "AppApi.XML";
                 c.IncludeXmlComments(xmlPath);
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "APP API", Version = "v1" });
             });
             #endregion
-
         }
 
         /// <summary>

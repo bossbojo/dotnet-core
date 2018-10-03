@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-
-namespace NewApi.Controllers
+using dotnetcore_micro.Models;
+namespace AppApi.Controllers
 {
     /// <summary>
     /// SimpleController RESTFul API 
@@ -14,52 +14,56 @@ namespace NewApi.Controllers
     public class SimpleController : ControllerBase
     {
         /// <summary>
-        /// Get Api Example
+        /// Get Method Api Example
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetMethod()
         {
-            return Ok("sss");
+            return Ok("Success Get Method");
         }
 
         /// <summary>
-        /// Get By {id} Api Example
+        /// Get Method By {id} Api Example
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public IActionResult GetMethodById(int id)
         {
-            return "value";
+            return Ok($"Success Get by id = {id} Method");
         }
 
         /// <summary>
-        /// Post Api Example 
+        /// Post Method Api Example 
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult PostMethod([FromBody] ModelSimple request)
         {
+            return Ok(request);
         }
 
         /// <summary>
-        /// Put by {id} Api Example 
+        /// Put Method by {id} Api Example 
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="request"></param>
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult PutMethod(int id, [FromBody] ModelSimple request)
         {
+            return Ok(request);
         }
 
         /// <summary>
-        /// Delete by {id} Api Example 
+        /// Delete Method by {id} Api Example 
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult DeleteMethod(int id)
         {
+            return Ok($"Success Delete by id = {id} Method");
         }
     }
 }

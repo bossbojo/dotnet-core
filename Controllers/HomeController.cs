@@ -4,14 +4,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSwag.Annotations;
 
-namespace NewApi.Controllers
+namespace AppApi.Controllers
 {
-  public class HomeController : Controller
-  {
+    /// <summary>
+    /// HomeController is MVC Controller
+    /// </summary>
+    public class HomeController : Controller
+    {
+        /// <summary>
+        /// is index page
+        /// </summary>
+        /// <returns></returns>
         [SwaggerIgnore]
         public IActionResult Index()
         {
             return new RedirectResult("~/swagger");
         }
-  }
+    }
 }
