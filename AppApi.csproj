@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <DocumentationFile>bin\AppApi.XML</DocumentationFile>
   </PropertyGroup>
 

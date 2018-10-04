@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -14,50 +15,32 @@ using Swashbuckle.AspNetCore.Swagger;
 
 namespace AppApi
 {
-    /// <summary>
-    /// Startup Class
-    /// </summary>
     public class Startup
     {
-        /// <summary>
-        /// Startup cons
-        /// </summary>
-        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-        /// <summary>
-        /// Get Configuration
-        /// </summary>
-        /// <value></value>
         public IConfiguration Configuration { get; }
 
-        /// <summary>
-        /// This method gets called by the runtime. Use this method to add services to the container.
-        /// </summary>
-        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            
+
+            services.AddDbContext<ConnectDB>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionDB")));
+
             #region Swagger
             services.AddSwaggerGen(c =>
             {
-                var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + "AppApi.XML";
-                c.IncludeXmlComments(xmlPath);
+               // var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + "AppApi.XML";
+               // c.IncludeXmlComments(xmlPath);
                 c.SwaggerDoc("v1", new Info { Title = "APP API", Version = "v1" });
             });
             #endregion
         }
-
-        /// <summary>
-        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        /// </summary>
-        /// <param name="app"></param>
-        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            var res = env.EnvironmentName;
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -73,9 +56,13 @@ namespace AppApi
                     routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 });
                 #endregion
-                
+
             }
-            else
+            else if(env.IsProduction())
+            {
+                app.UseHsts();
+            }
+            else if(env.IsStaging())
             {
                 app.UseHsts();
             }

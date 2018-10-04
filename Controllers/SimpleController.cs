@@ -18,9 +18,20 @@ namespace AppApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult GetMethod()
+        public IActionResult GetMethodAsync()
         {
-            return Ok("Success Get Method");
+            try
+            {
+                using (var context = new ConnectDB())
+                {
+                    var model = context.SimpleTable.ToList();
+                    return Ok(context.SimpleTable);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>

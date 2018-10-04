@@ -1,7 +1,7 @@
 # คำสั่งพื้นฐาน
-## RUN
+## RUN Environment Default is "Development"
 ```
-    dotnet run
+    dotnet run --environment "EnvironmentName"
 ```
 ## BUILD
 ```
