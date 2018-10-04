@@ -1,11 +1,20 @@
-# การสร้าง DbContext SQLServer
-### คำสั่งที่ใช้
+# คำสั่งพื้นฐาน
+## RUN
 ```
-dotnet ef dbcontext scaffold [Connection String] [Provider] [Output Directory] [Table]
+    dotnet run
+```
+## BUILD
+```
+    dotnet build
+```
+
+# การสร้าง DbContext SQLServer
+```
+    dotnet ef dbcontext scaffold [Connection String] [Provider] [Output Directory] [Table]
 ```
 ### Connection String
 ```
-"data source={ServerName};initial catalog={DBname};persist security info=True;user id={Username};password={Password};MultipleActiveResultSets=True;App=EntityFramework;" 
+    "data source={ServerName};initial catalog={DBname};persist security info=True;user id={Username};password={Password};MultipleActiveResultSets=True;App=EntityFramework;" 
 ``` 
 ### Provider
 ```
@@ -13,9 +22,9 @@ dotnet ef dbcontext scaffold [Connection String] [Provider] [Output Directory] [
 ```
 ### Output Directory
 ```
-    --output-dir [Folder Name]
+    --output-dir [FolderName]
 ```
 ### Table
 ```
-    -t [Shcema].[TableName],[Shcema].[TableName]
+    -t [TableName] -t [TableName] -t [TableName] -t [TableName] -f
 ```
