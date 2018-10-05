@@ -4,11 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using dotnetcore_micro.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 namespace AppApi.Controllers
 {
-    /// <summary>
-    /// SimpleController RESTFul API 
-    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class SimpleController : ControllerBase
@@ -25,7 +24,7 @@ namespace AppApi.Controllers
                 using (var context = new ConnectDB())
                 {
                     var model = context.SimpleTable.ToList();
-                    return Ok(context.SimpleTable);
+                    return Ok(model);
                 }
             }
             catch (Exception ex)
@@ -42,7 +41,18 @@ namespace AppApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetMethodById(int id)
         {
-            return Ok($"Success Get by id = {id} Method");
+            try
+            {
+                using (var context = new ConnectDB())
+                {
+                    var model = context.SimpleTable.FirstOrDefault(c => c.Id == id);
+                    return Ok(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
@@ -51,9 +61,29 @@ namespace AppApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult PostMethod([FromBody] ModelSimple request)
+        public async Task<IActionResult> PostMethodAsync([FromBody] ModelSimple request)
         {
-            return Ok(request);
+            try
+            {
+                using (var context = new ConnectDB())
+                {
+                    var add = context.SimpleTable.Add(new AppApi.Models.Table.SimpleTable
+                    {
+                        Firstname = request.firstname,
+                        Lastname = request.lastname
+                    });
+                    int save = await context.SaveChangesAsync();
+                    if (save > 0)
+                    {
+                        return Ok(add.Entity);
+                    }
+                    throw new Exception("save to database failed");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
@@ -62,9 +92,27 @@ namespace AppApi.Controllers
         /// <param name="id"></param>
         /// <param name="request"></param>
         [HttpPut("{id}")]
-        public IActionResult PutMethod(int id, [FromBody] ModelSimple request)
+        public async Task<IActionResult> PutMethodAsync(int id, [FromBody] ModelSimple request)
         {
-            return Ok(request);
+            try
+            {
+                using (var context = new ConnectDB())
+                {
+                    var update = context.SimpleTable.FirstOrDefault(c => c.Id == id);
+                    update.Firstname = request.firstname;
+                    update.Lastname = request.lastname;
+                    int save = await context.SaveChangesAsync();
+                    if (save > 0)
+                    {
+                        return Ok(update);
+                    }
+                    throw new Exception("save to database failed");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
@@ -72,9 +120,26 @@ namespace AppApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        public IActionResult DeleteMethod(int id)
+        public async Task<IActionResult> DeleteMethodAsync(int id)
         {
-            return Ok($"Success Delete by id = {id} Method");
+            try
+            {
+                using (var context = new ConnectDB())
+                {
+                    var delete = context.SimpleTable.FirstOrDefault(c => c.Id == id);
+                    context.SimpleTable.Remove(delete);
+                    int save = await context.SaveChangesAsync();
+                    if (save > 0)
+                    {
+                        return Ok($"Success delete id {id} SimpleTable");
+                    }
+                    throw new Exception("save to database failed");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -27,7 +27,9 @@ namespace AppApi
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddDbContext<ConnectDB>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionDB")));
+            // services.AddDbContext<ConnectDB>(options => 
+            //     options.UseSqlServer(Configuration.GetConnectionString("ConnectionDB"))
+            // );
 
             #region Swagger
             services.AddSwaggerGen(c =>
