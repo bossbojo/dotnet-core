@@ -6,24 +6,36 @@ using Microsoft.AspNetCore.Mvc;
 using dotnetcore_micro.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.SignalR;
+using AppApi.Hubs;
+using AppApi.Models.Table;
+
 namespace AppApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class SimpleController : ControllerBase
     {
+        private NotificationHub hub;
+    
+        public SimpleController(IHubContext<NotificationHub> Hub)
+        {
+            hub = new NotificationHub(Hub);
+        }
         /// <summary>
         /// Get Method Api Example
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult GetMethodAsync()
+        public async Task<IActionResult> GetMethodAsync(string jsonString)
         {
             try
             {
+                Request.HttpContext.Response.Headers.Add("X-Total-Count", "20");
                 using (var context = new ConnectDB())
                 {
                     var model = context.SimpleTable.ToList();
+                    await this.hub.OnSendNotification("XX012", "YourChanel",jsonString);
                     return Ok(model);
                 }
             }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppApi.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,20 +26,18 @@ namespace AppApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // services.AddDbContext<ConnectDB>(options => 
-            //     options.UseSqlServer(Configuration.GetConnectionString("ConnectionDB"))
-            // );
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder => { builder.AllowAnyMethod().AllowAnyHeader().AllowCredentials().AllowAnyOrigin().WithOrigins(); }));
 
-            #region Swagger
             services.AddSwaggerGen(c =>
             {
-               // var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + "AppApi.XML";
-               // c.IncludeXmlComments(xmlPath);
+                // var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + "AppApi.XML";
+                // c.IncludeXmlComments(xmlPath);
                 c.SwaggerDoc("v1", new Info { Title = "APP API", Version = "v1" });
             });
-            #endregion
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -46,29 +45,36 @@ namespace AppApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseMvc(routes =>
+                {
+                    routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                });
 
-                #region Swagger
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 });
-                app.UseMvc(routes =>
-                {
-                    routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                });
-                #endregion
 
             }
-            else if(env.IsProduction())
+            else if (env.IsProduction())
             {
                 app.UseHsts();
             }
-            else if(env.IsStaging())
+            else if (env.IsStaging())
             {
                 app.UseHsts();
             }
+
+            app.UseCors("CorsPolicy");
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<NotificationHub>("/notification");
+            });
+
             app.UseHttpsRedirection();
+
             app.UseMvc();
         }
     }
