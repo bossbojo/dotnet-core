@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AppApi.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,7 +25,6 @@ namespace AppApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSignalR();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -67,11 +65,6 @@ namespace AppApi
             }
 
             app.UseCors("CorsPolicy");
-
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<NotificationHub>("/notification");
-            });
 
             app.UseHttpsRedirection();
 
