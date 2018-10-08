@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System;
 
 namespace AppApi.Hubs
 {
@@ -40,7 +41,7 @@ namespace AppApi.Hubs
         }
         public async Task<bool> OnSendNotificationAsync(string UserId, string Channel, string jsonString)
         {
-            if (jsonString != "" && UserId != "" && Channel != "")
+            if (UserId != "" && Channel != "")
             {
                 var user = UserId.Split(',');
                 if (user.Count() == 1)
@@ -54,8 +55,8 @@ namespace AppApi.Hubs
                             Channel = Channel
                         });
                         await HubNow.Clients.Clients(find.ConnectionId).SendAsync("ReceiveNotification", Ojson);
-                        return true;
                     }
+                    return true;
                 }
                 else
                 {
@@ -70,12 +71,25 @@ namespace AppApi.Hubs
                                 Channel = Channel
                             });
                             await HubNow.Clients.Clients(find.ConnectionId).SendAsync("ReceiveNotification", Ojson);
-                            return true;
                         }
                     }
+                    return true;
                 }
             }
             return false;
+        }
+        // public override async Task OnConnectedAsync()
+        // {
+        //     await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
+        //     await base.OnConnectedAsync();
+        // }
+
+        public override async Task OnDisconnectedAsync(Exception exception)
+        {
+            var find = UserOnline.FirstOrDefault(c => c.ConnectionId == Context.ConnectionId);
+            UserOnline.Remove(find);
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, "SignalR Users");
+            await base.OnDisconnectedAsync(exception);
         }
     }
 }

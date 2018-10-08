@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AppApi.Hubs;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
@@ -26,6 +28,8 @@ namespace AppApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDirectoryBrowser();
+
             services.AddSignalR();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -42,13 +46,14 @@ namespace AppApi
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             var res = env.EnvironmentName;
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseMvc(routes =>
-                {
-                    routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                });
+                // app.UseMvc(routes =>
+                // {
+                //     routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                // });
 
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
@@ -65,6 +70,10 @@ namespace AppApi
             {
                 app.UseHsts();
             }
+
+            // Default App
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseCors("CorsPolicy");
 

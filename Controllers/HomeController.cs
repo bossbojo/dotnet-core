@@ -11,14 +11,12 @@ namespace AppApi.Controllers
     /// </summary>
     public class HomeController : Controller
     {
-        /// <summary>
-        /// is index page
-        /// </summary>
-        /// <returns></returns>
+        // is index page
         [SwaggerIgnore]
         public IActionResult Index()
         {
-            return new RedirectResult("~/swagger");
+            
+              return new RedirectResult("~/swagger");
         }
     }
 }
