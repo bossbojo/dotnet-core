@@ -16,18 +16,9 @@ namespace AppApi.Controllers
     [ApiController]
     public class SimpleController : ControllerBase
     {
-        private NotificationHub hub;
-    
-        public SimpleController(IHubContext<NotificationHub> Hub)
-        {
-            hub = new NotificationHub(Hub);
-        }
-        /// <summary>
-        /// Get Method Api Example
-        /// </summary>
-        /// <returns></returns>
+        // Get Method Api Example
         [HttpGet]
-        public async Task<IActionResult> GetMethodAsync(string jsonString)
+        public IActionResult GetMethod(string jsonString)
         {
             try
             {
@@ -35,7 +26,6 @@ namespace AppApi.Controllers
                 using (var context = new ConnectDB())
                 {
                     var model = context.SimpleTable.ToList();
-                    await this.hub.OnSendNotification("XX012", "YourChanel",jsonString);
                     return Ok(model);
                 }
             }
@@ -45,11 +35,7 @@ namespace AppApi.Controllers
             }
         }
 
-        /// <summary>
-        /// Get Method By {id} Api Example
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        // Get Method By {id} Api Example
         [HttpGet("{id}")]
         public IActionResult GetMethodById(int id)
         {
@@ -67,11 +53,7 @@ namespace AppApi.Controllers
             }
         }
 
-        /// <summary>
-        /// Post Method Api Example 
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
+        // Post Method Api Example 
         [HttpPost]
         public async Task<IActionResult> PostMethodAsync([FromBody] ModelSimple request)
         {
@@ -98,11 +80,7 @@ namespace AppApi.Controllers
             }
         }
 
-        /// <summary>
-        /// Put Method by {id} Api Example 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="request"></param>
+        // Put Method by {id} Api Example 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMethodAsync(int id, [FromBody] ModelSimple request)
         {
@@ -127,10 +105,7 @@ namespace AppApi.Controllers
             }
         }
 
-        /// <summary>
-        /// Delete Method by {id} Api Example 
-        /// </summary>
-        /// <param name="id"></param>
+        // Delete Method by {id} Api Example 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMethodAsync(int id)
         {
