@@ -1,4 +1,4 @@
-using AppApi.Models;
+using AppApi.Models.ModelSignelR;
 using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,44 +15,67 @@ namespace AppApi.Hubs
         {
             HubNow = Hub;
         }
-        public async Task OnConnectHub(string UserId, string Chanel)
+        public async Task OnConnectHub(string UserId, string Channel)
         {
-            var find = UserOnline.FirstOrDefault(c => c.UserId == UserId && c.Chanel == Chanel);
+            var find = UserOnline.FirstOrDefault(c => c.UserId == UserId && c.Channel == Channel);
 
             if (find != null)
             {
-                UserOnline.Add(new ModelClient { ConnectionId = Context.ConnectionId, UserId = UserId, Chanel = Chanel });
+                UserOnline.Add(new ModelClient { ConnectionId = Context.ConnectionId, UserId = UserId, Channel = Channel });
             }
             else
             {
                 UserOnline.Remove(find);
-                ModelClient addNew = new ModelClient { ConnectionId = Context.ConnectionId, UserId = UserId, Chanel = Chanel };
+                ModelClient addNew = new ModelClient { ConnectionId = Context.ConnectionId, UserId = UserId, Channel = Channel };
                 UserOnline.Add(addNew);
             }
 
             string Ojson = JsonConvert.SerializeObject(new ModelResponseSignelR
             {
-                Item = JsonConvert.SerializeObject(new ModelClient { ConnectionId = Context.ConnectionId, UserId = UserId, Chanel = Chanel }),
-                Chanel = Chanel
+                Item = JsonConvert.SerializeObject(new ModelClient { ConnectionId = Context.ConnectionId, UserId = UserId, Channel = Channel }),
+                Channel = Channel
             });
 
             await Clients.Clients(Context.ConnectionId).SendAsync("OnConnected", Ojson);
         }
-        public async Task OnSendNotification(string UserId, string Chanel, string jsonString)
+        public async Task<bool> OnSendNotificationAsync(string UserId, string Channel, string jsonString)
         {
-            if (jsonString != null)
+            if (jsonString != "" && UserId != "" && Channel != "")
             {
-                var find = UserOnline.FirstOrDefault(c => c.UserId == UserId && c.Chanel == Chanel);
-                if (find != null)
+                var user = UserId.Split(',');
+                if (user.Count() == 1)
                 {
-                    string Ojson = JsonConvert.SerializeObject(new ModelResponseSignelR
+                    var find = UserOnline.FirstOrDefault(c => c.UserId == user[0] && c.Channel == Channel);
+                    if (find != null)
                     {
-                        Item = jsonString,
-                        Chanel = Chanel
-                    });
-                    await HubNow.Clients.Clients(find.ConnectionId).SendAsync("ReceiveNotification", Ojson);
+                        string Ojson = JsonConvert.SerializeObject(new ModelResponseSignelR
+                        {
+                            Item = jsonString,
+                            Channel = Channel
+                        });
+                        await HubNow.Clients.Clients(find.ConnectionId).SendAsync("ReceiveNotification", Ojson);
+                        return true;
+                    }
+                }
+                else
+                {
+                    foreach (var users in user)
+                    {
+                        var find = UserOnline.FirstOrDefault(c => c.UserId == users && c.Channel == Channel);
+                        if (find != null)
+                        {
+                            string Ojson = JsonConvert.SerializeObject(new ModelResponseSignelR
+                            {
+                                Item = jsonString,
+                                Channel = Channel
+                            });
+                            await HubNow.Clients.Clients(find.ConnectionId).SendAsync("ReceiveNotification", Ojson);
+                            return true;
+                        }
+                    }
                 }
             }
+            return false;
         }
     }
 }
