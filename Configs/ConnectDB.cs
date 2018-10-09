@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using AppApi.Models.Table;
 
-namespace AppApi
+namespace AppApi.Configs
 {
     public partial class ConnectDB : DbContext
     {

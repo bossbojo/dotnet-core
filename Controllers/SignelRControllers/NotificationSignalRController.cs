@@ -11,7 +11,7 @@ using AppApi.Hubs;
 using AppApi.Models.ModelSignelR;
 using Microsoft.AspNetCore.Authorization;
 
-namespace AppApi.Controllers
+namespace AppApi.Controllers.SignelRControllers
 {
     [Route("api/[controller]")]
     [ApiController]

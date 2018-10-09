@@ -46,15 +46,18 @@ namespace AppApi.Hubs
                 var user = UserId.Split(',');
                 if (user.Count() == 1)
                 {
-                    var find = UserOnline.FirstOrDefault(c => c.UserId == user[0] && c.Channel == Channel);
+                    var find = UserOnline.Where(c => c.UserId == user[0] && c.Channel == Channel);
                     if (find != null)
                     {
-                        string Ojson = JsonConvert.SerializeObject(new ModelResponseSignelR
+                        foreach (var item in find)
                         {
-                            Item = jsonString,
-                            Channel = Channel
-                        });
-                        await HubNow.Clients.Clients(find.ConnectionId).SendAsync("ReceiveNotification", Ojson);
+                            string Ojson = JsonConvert.SerializeObject(new ModelResponseSignelR
+                            {
+                                Item = jsonString,
+                                Channel = Channel
+                            });
+                            await HubNow.Clients.Clients(item.ConnectionId).SendAsync("ReceiveNotification", Ojson);
+                        }
                     }
                     return true;
                 }

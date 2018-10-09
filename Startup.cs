@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using AppApi.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -14,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.Swagger;
+using AppApi.Configs;
 
 namespace AppApi
 {
@@ -34,57 +33,38 @@ namespace AppApi
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddCors(o => o.AddPolicy("CorsPolicy", builder => { builder.AllowAnyMethod().AllowAnyHeader().AllowCredentials().AllowAnyOrigin().WithOrigins(); }));
-
-            services.AddSwaggerGen(c =>
-            {
-                // var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + "AppApi.XML";
-                // c.IncludeXmlComments(xmlPath);
-                c.SwaggerDoc("v1", new Info { Title = "APP API", Version = "v1" });
-            });
+            CORS.CORSServices(services);
+            Swagger.StartUpSwaggerConfigureServices(services);
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            var res = env.EnvironmentName;
 
-            if (env.IsDevelopment())
+            if (env.IsDevelopment()) //Is Development mode
             {
                 app.UseDeveloperExceptionPage();
-                // app.UseMvc(routes =>
-                // {
-                //     routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                // });
-
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                });
-
             }
-            else if (env.IsProduction())
-            {
-                app.UseHsts();
-            }
-            else if (env.IsStaging())
+
+
+            else if (env.IsProduction()) //Is Production mode
             {
                 app.UseHsts();
             }
 
-            // Default App
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
+
+            else if (env.IsStaging()) //Is Staging mode
+            {
+                app.UseHsts();
+            }
+
+            Swagger.StartUpSwaggerConfigure(app);
+            DefaultFiles.DefaultFilesConfigure(app);
+            SignalRMapHub.SignalRMapHubConfigure(app);
 
             app.UseCors("CorsPolicy");
-
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<NotificationHub>("/notification");
-            });
-
             app.UseHttpsRedirection();
-
             app.UseMvc();
+            app.UseRewriter();
+
         }
     }
 }

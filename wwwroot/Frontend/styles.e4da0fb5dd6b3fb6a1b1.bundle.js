@@ -3,7 +3,7 @@ webpackJsonp(["styles"],{
 /***/ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js??embedded!./src/styles.css":
 /***/ (function(module, exports) {
 
-module.exports = "/* You can add global styles to this file, and also import other style files */\n"
+module.exports = "/* You can add global styles to this file, and also import other style files */\n.var{\n    color: blue;\n    font-weight:bold;\n}\n.string{\n    color: green;\n    font-weight:bold;\n}\n.res{\n    color: #008080;\n    font-weight:bold;\n}\n.err{\n    color: #ff0000;\n    font-weight:bold;\n}\n.method{\n    color: #ff8000;\n}"
 
 /***/ }),
 
@@ -517,4 +517,4 @@ module.exports = __webpack_require__("./src/styles.css");
 /***/ })
 
 },[2]);
-//# sourceMappingURL=styles.bundle.js.map
+//# sourceMappingURL=styles.e4da0fb5dd6b3fb6a1b1.bundle.js.map

@@ -6,18 +6,20 @@ webpackJsonp(["main"],{
 var map = {
 	"app/Pages/Home/Home.module": [
 		"./src/app/Pages/Home/Home.module.ts",
-		"Home.module"
+		"Home.module",
+		"common"
 	],
 	"app/Pages/Simple/Simple.module": [
 		"./src/app/Pages/Simple/Simple.module.ts",
-		"Simple.module"
+		"Simple.module",
+		"common"
 	]
 };
 function webpackAsyncContext(req) {
 	var ids = map[req];
 	if(!ids)
 		return Promise.reject(new Error("Cannot find module '" + req + "'."));
-	return __webpack_require__.e(ids[1]).then(function() {
+	return Promise.all(ids.slice(1).map(__webpack_require__.e)).then(function() {
 		return __webpack_require__(ids[0]);
 	});
 };
@@ -32,7 +34,7 @@ module.exports = webpackAsyncContext;
 /***/ "./src/app/Components/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\n  <div class=\"container\">\n    <a class=\"navbar-brand\" href=\"#\">SignelR Service</a>\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\" aria-controls=\"navbarNav\" aria-expanded=\"false\"\n      aria-label=\"Toggle navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n      <ul class=\"navbar-nav\">\n        <li class=\"nav-item \" [routerLinkActive]=\"['active']\">\n          <a class=\"nav-link\" [routerLink]=\"['/','']\">Help <span class=\"sr-only\">(current)</span></a>\n        </li>\n        <li class=\"nav-item\" [routerLinkActive]=\"['active']\">\n          <a class=\"nav-link\" [routerLink]=\"['/','simple']\">Simple</a>\n        </li>\n        <li class=\"nav-item\" [routerLinkActive]=\"['active']\">\n            <a class=\"nav-link\" [routerLink]=\"['/','swagger']\">API</a>\n          </li>\n      </ul>\n    </div>\n  </div>\n</nav>"
+module.exports = "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\n  <div class=\"container\">\n    <a class=\"navbar-brand\" href=\"#\">SignelR Service</a>\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\" aria-controls=\"navbarNav\" aria-expanded=\"false\"\n      aria-label=\"Toggle navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n      <ul class=\"navbar-nav\">\n        <li class=\"nav-item \" [routerLinkActive]=\"['active']\">\n          <a class=\"nav-link\" [routerLink]=\"['/','']\">Help <span class=\"sr-only\">(current)</span></a>\n        </li>\n        <li class=\"nav-item\" [routerLinkActive]=\"['active']\">\n          <a class=\"nav-link\" [routerLink]=\"['/','simple']\">Simple</a>\n        </li>\n        <li class=\"nav-item\" [routerLinkActive]=\"['active']\">\n            <a class=\"nav-link\" [routerLink]=\"['/','swagger']\" target=\"_blank\">API</a>\n          </li>\n      </ul>\n    </div>\n  </div>\n</nav>"
 
 /***/ }),
 
@@ -99,7 +101,6 @@ module.exports = ""
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__aspnet_signalr__ = __webpack_require__("./node_modules/@aspnet/signalr/dist/esm/index.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -110,34 +111,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
 var AppComponent = /** @class */ (function () {
     function AppComponent() {
-        this.UserId = 'XX012';
-        this.Chanel = 'YourChanel';
     }
     AppComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.hubConnection = new __WEBPACK_IMPORTED_MODULE_1__aspnet_signalr__["a" /* HubConnectionBuilder */]()
-            .withUrl('http://localhost:5000/notification')
-            .configureLogging(__WEBPACK_IMPORTED_MODULE_1__aspnet_signalr__["b" /* LogLevel */].Information)
-            .build();
-        this.hubConnection.start().then(function () {
-            console.log('Connection started!');
-            _this.hubConnection
-                .invoke('OnConnectHub', _this.UserId, _this.Chanel)
-                .catch(function (err) { return console.error(err); });
-        }).catch(function (err) { return console.log('Error while establishing connection :('); });
-        this.hubConnection.on('OnConnected', function (Ojson) {
-            if (Ojson) {
-                console.log(JSON.parse(Ojson));
-            }
-        });
-        this.hubConnection.on('ReceiveNotification', function (Ojson) {
-            if (Ojson) {
-                console.log(JSON.parse(Ojson));
-            }
-        });
     };
     AppComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -284,4 +261,4 @@ module.exports = __webpack_require__("./src/main.ts");
 /***/ })
 
 },[0]);
-//# sourceMappingURL=main.bundle.js.map
+//# sourceMappingURL=main.9b01d8a145e5cec92e89.bundle.js.map
