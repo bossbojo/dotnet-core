@@ -1,3 +1,4 @@
+using AppApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -12,7 +13,7 @@ namespace AppApi.Configs
             {
                 // var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + "AppApi.XML";
                 // c.IncludeXmlComments(xmlPath);
-                c.SwaggerDoc("v1", new Info { Title = "APP API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = StaticVariables.ProjectName+" API", Version = "version "+StaticVariables.Version });
             });
         }
         public static void StartUpSwaggerConfigure(IApplicationBuilder app)
@@ -20,7 +21,7 @@ namespace AppApi.Configs
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", StaticVariables.ProjectName+" API version "+StaticVariables.Version);
             });
         }
     }

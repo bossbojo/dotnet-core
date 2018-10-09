@@ -15,6 +15,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using AppApi.Configs;
 using AppApi.Services;
+using AppApi.Dependencies;
+
 namespace AppApi
 {
     public class Startup
@@ -27,7 +29,12 @@ namespace AppApi
                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                .AddEnvironmentVariables();
             Configuration = builder.Build();
+
             StaticVariables.ConnectionString = Configuration.GetConnectionString("ConnectionDB");
+            
+            StaticVariables.ProjectName = "SignalR Microservice";
+
+            StaticVariables.Version = "0.1";
         }
         public IConfiguration Configuration { get; }
 
@@ -39,6 +46,7 @@ namespace AppApi
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            DependencyInjection.DependencyInjectionServices(services);
             CORS.CORSServices(services);
             Swagger.StartUpSwaggerConfigureServices(services);
         }

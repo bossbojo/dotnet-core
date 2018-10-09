@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.SignalR;
 using AppApi.Hubs;
 using AppApi.Models.Table;
 using AppApi.Configs;
+using AppApi.Repositories.Interfaces;
 
 namespace AppApi.Controllers.APIControllers
 {
@@ -17,17 +18,18 @@ namespace AppApi.Controllers.APIControllers
     [ApiController]
     public class SimpleController : ControllerBase
     {
+        private readonly ISimple _ISimple;
+        public SimpleController(ISimple ISimple_)
+        {
+            _ISimple = ISimple_;
+        }
         // Get Method Api Example
         [HttpGet]
-        public IActionResult GetMethod(string jsonString)
+        public IActionResult GetMethod()
         {
             try
             {
-                using (var context = new ConnectDB())
-                {
-                    var model = context.SimpleTable.ToList();
-                    return Ok(model);
-                }
+                return Ok(_ISimple.GetSimples());
             }
             catch (Exception ex)
             {
