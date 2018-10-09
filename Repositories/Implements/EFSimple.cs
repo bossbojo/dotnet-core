@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using AppApi.Configs;
-using AppApi.Models.Table;
+using AppApi.Entities;
+using AppApi.Entities.Table;
 using AppApi.Repositories.Interfaces;
 using System.Linq;
 

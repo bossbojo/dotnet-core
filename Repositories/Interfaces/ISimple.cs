@@ -1,4 +1,4 @@
-using AppApi.Models.Table;
+using AppApi.Entities.Table;
 using System.Collections.Generic;
 using System.Linq;
 namespace AppApi.Repositories.Interfaces

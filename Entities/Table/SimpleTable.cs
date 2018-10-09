@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AppApi.Models.Table
+namespace AppApi.Entities.Table
 {
     public partial class SimpleTable
     {

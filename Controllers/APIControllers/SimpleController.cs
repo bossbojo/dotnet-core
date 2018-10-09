@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.SignalR;
 using AppApi.Hubs;
-using AppApi.Models.Table;
+using AppApi.Entities.Table;
 using AppApi.Configs;
 using AppApi.Repositories.Interfaces;
 
