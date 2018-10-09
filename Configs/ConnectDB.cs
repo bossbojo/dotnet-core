@@ -2,18 +2,21 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using AppApi.Models.Table;
-
+using AppApi.Services;
 namespace AppApi.Configs
 {
     public partial class ConnectDB : DbContext
     {
+        //Your Table
         public virtual DbSet<SimpleTable> SimpleTable { get; set; }
+        
 
+        //Configuration for Connection Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("data source=paramat.work;initial catalog=TestCoreDB;persist security info=True;user id=TestDBCore;password=Addlink123!;MultipleActiveResultSets=True;App=EntityFramework;");
+                optionsBuilder.UseSqlServer(StaticVariables.ConnectionString);
             }
         }
     }

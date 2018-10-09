@@ -14,14 +14,20 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using AppApi.Configs;
-
+using AppApi.Services;
 namespace AppApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+               .SetBasePath(env.ContentRootPath)
+               .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+               .AddEnvironmentVariables();
+            Configuration = builder.Build();
+            StaticVariables.ConnectionString = Configuration.GetConnectionString("ConnectionDB");
         }
         public IConfiguration Configuration { get; }
 
@@ -38,19 +44,14 @@ namespace AppApi
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
             if (env.IsDevelopment()) //Is Development mode
             {
                 app.UseDeveloperExceptionPage();
             }
-
-
             else if (env.IsProduction()) //Is Production mode
             {
                 app.UseHsts();
             }
-
-
             else if (env.IsStaging()) //Is Staging mode
             {
                 app.UseHsts();
