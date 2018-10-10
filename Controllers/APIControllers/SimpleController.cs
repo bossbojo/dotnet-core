@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using dotnetcore_micro.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.Http;
+using AppApi.Models;
 using AppApi.Hubs;
 using AppApi.Entities.Table;
 using AppApi.Configs;
 using AppApi.Repositories.Interfaces;
+using AppApi.Libraries.Pagination;
 
 namespace AppApi.Controllers.APIControllers
 {
@@ -29,7 +31,8 @@ namespace AppApi.Controllers.APIControllers
         {
             try
             {
-                return Ok(_ISimple.GetSimples());
+                var page = new PaginationAndFilter(HttpContext);
+                return Ok(page.queryPaginationJSON("Users"));
             }
             catch (Exception ex)
             {

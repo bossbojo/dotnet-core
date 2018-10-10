@@ -1,16 +1,15 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using AppApi.Entities.Table;
 using AppApi.Services;
-namespace AppApi.Entities
+namespace AppApi.Libraries.Pagination
 {
-    public partial class ConnectDB : DbContext
+    public partial class Context : DbContext
     {
         //Your Table
-        public virtual DbSet<SimpleTable> SimpleTable { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
-        
+        public virtual DbSet<pagination_json> ReponseJson { get; set; }
+
 
         //Configuration for Connection Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -20,5 +19,15 @@ namespace AppApi.Entities
                 optionsBuilder.UseSqlServer(StaticVariables.ConnectionString);
             }
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+    }
+    public class pagination_json
+    {
+        public int Id { get; set; }
+        public string Item { get; set; }
+        public int Count_row { get; set; }
     }
 }

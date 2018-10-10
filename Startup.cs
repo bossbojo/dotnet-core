@@ -16,6 +16,7 @@ using Microsoft.Extensions.Options;
 using AppApi.Configs;
 using AppApi.Services;
 using AppApi.Dependencies;
+using Microsoft.AspNetCore.Http;
 
 namespace AppApi
 {
@@ -35,6 +36,9 @@ namespace AppApi
             StaticVariables.ProjectName = "SignalR Microservice";
 
             StaticVariables.Version = "0.1";
+            
+            Console.WriteLine(env.EnvironmentName);
+
         }
         public IConfiguration Configuration { get; }
 
@@ -46,8 +50,8 @@ namespace AppApi
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            DependencyInjection.DependencyInjectionServices(services);
             CORS.CORSServices(services);
+            DependencyInjection.DependencyInjectionServices(services);
             Swagger.StartUpSwaggerConfigureServices(services);
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -7,9 +7,7 @@ namespace AppApi.Dependencies
     public static class DependencyInjection
     {
         public static void DependencyInjectionServices(IServiceCollection services){
-
-            services.AddTransient<ISimple,EFSimple>();
-
+            services.AddScoped<ISimple,EFSimple>();
         }
     }
 }

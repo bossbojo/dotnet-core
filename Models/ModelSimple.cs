@@ -1,4 +1,4 @@
-namespace dotnetcore_micro.Models
+namespace AppApi.Models
 {
     public class ModelSimple
     {
