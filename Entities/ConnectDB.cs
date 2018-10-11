@@ -8,7 +8,6 @@ namespace AppApi.Entities
     public partial class ConnectDB : DbContext
     {
         //Your Table
-        public virtual DbSet<SimpleTable> SimpleTable { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         
 

@@ -1,22 +1,13 @@
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
+FROM microsoft/dotnet:latest
+
+COPY . /app
 WORKDIR /app
-EXPOSE 8000
 
-FROM microsoft/dotnet:2.1-sdk AS build
-WORKDIR /src
-COPY ["AppApi.csproj", "./"]
-RUN dotnet restore "./AppApi.csproj"
-COPY . .
-WORKDIR "/src/."
-RUN dotnet build "AppApi.csproj" -c Release -o /app
+RUN dotnet restore
+RUN dotnet build
 
-FROM build AS publish
-RUN dotnet publish "AppApi.csproj" -c Release -o /app
+EXPOSE 5000/tcp
+ENV ASPNETCORE_URLS=http://*5000
+ENV ASPNETCORE_EVIROMENT=Testing
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app .
-
-ENV ASPNETCORE_EVIROMENT Development
-
-ENTRYPOINT ["dotnet", "AppApi.dll"]
+ENTRYPOINT dotnet run

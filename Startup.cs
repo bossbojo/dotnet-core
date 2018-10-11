@@ -32,11 +32,11 @@ namespace AppApi
             Configuration = builder.Build();
 
             StaticVariables.ConnectionString = Configuration.GetConnectionString("ConnectionDB");
-            
+
             StaticVariables.ProjectName = "SignalR Microservice";
 
             StaticVariables.Version = "0.1";
-            
+
             Console.WriteLine(env.EnvironmentName);
 
         }
@@ -50,14 +50,20 @@ namespace AppApi
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            AuthenticationConfig.AuthenticationConfigServices(services,Configuration);
+
             CORS.CORSServices(services);
+
             DependencyInjection.DependencyInjectionServices(services);
+
             Swagger.StartUpSwaggerConfigureServices(services);
+
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment()) //Is Development mode
             {
+                Swagger.StartUpSwaggerConfigure(app);
                 app.UseDeveloperExceptionPage();
             }
             else if (env.IsProduction()) //Is Production mode
@@ -69,10 +75,10 @@ namespace AppApi
                 app.UseHsts();
             }
 
-            Swagger.StartUpSwaggerConfigure(app);
             DefaultFiles.DefaultFilesConfigure(app);
             SignalRMapHub.SignalRMapHubConfigure(app);
 
+            app.UseAuthentication();
             app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
             app.UseMvc();

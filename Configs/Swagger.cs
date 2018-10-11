@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using AppApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,20 @@ namespace AppApi.Configs
             {
                 // var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + "AppApi.XML";
                 // c.IncludeXmlComments(xmlPath);
-                c.SwaggerDoc("v1", new Info { Title = StaticVariables.ProjectName+" API", Version = "version "+StaticVariables.Version });
+                c.SwaggerDoc("v1", new Info { Title = StaticVariables.ProjectName + " API", Version = "version " + StaticVariables.Version });
+                var security = new Dictionary<string, IEnumerable<string>>
+                {
+                    {"Bearer", new string[] { }},
+                };
+
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
+                });
+                c.AddSecurityRequirement(security);
             });
         }
         public static void StartUpSwaggerConfigure(IApplicationBuilder app)
@@ -21,7 +35,9 @@ namespace AppApi.Configs
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", StaticVariables.ProjectName+" API version "+StaticVariables.Version);
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", StaticVariables.ProjectName + " API version " + StaticVariables.Version);
+                c.DocumentTitle = "Title Documentation";
+                c.DocExpansion(DocExpansion.None);
             });
         }
     }

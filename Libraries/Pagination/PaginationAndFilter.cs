@@ -207,7 +207,7 @@ namespace AppApi.Libraries.Pagination
         //Query
         private pagination_json queryPaginationYourWereJSON(Parame input)
         {
-            var items = db.ReponseJson.FromSql("EXEC [dbo].[pagination_json] @table_name,@search_text,@yourwhere,@key_where,@page,@limit_page,@sortby,@sort_type",
+            var items = db.ReponseJson.FromSql("EXEC [dbo].[s_Pagination] @table_name,@search_text,@yourwhere,@key_where,@page,@limit_page,@sortby,@sort_type",
                 new SqlParameter("@table_name", input.table_name),
                 new SqlParameter("@search_text", input.search_text),
                 new SqlParameter("@yourwhere", input.yourwhere),

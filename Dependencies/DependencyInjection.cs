@@ -7,7 +7,7 @@ namespace AppApi.Dependencies
     public static class DependencyInjection
     {
         public static void DependencyInjectionServices(IServiceCollection services){
-            services.AddScoped<ISimple,EFSimple>();
+            services.AddScoped<IUsers,EFUsers>();
         }
     }
 }
