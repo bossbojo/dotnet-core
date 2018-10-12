@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using AppApi.Entities;
-using AppApi.Entities.Table;
-using AppApi.Models;
-using AppApi.Repositories.Interfaces;
+using WebApi.Entities;
+using WebApi.Entities.Table;
+using WebApi.Models;
+using WebApi.Repositories.Interfaces;
 
-namespace AppApi.Repositories.Implements
+namespace WebApi.Repositories.Implements
 {
     public class EFUsers : IUsers
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using AppApi.Entities.Table;
-using AppApi.Services;
-namespace AppApi.Entities
+using WebApi.Entities.Table;
+using WebApi.Services;
+namespace WebApi.Entities
 {
     public partial class ConnectDB : DbContext
     {

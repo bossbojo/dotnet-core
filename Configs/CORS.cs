@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AppApi.Configs
+namespace WebApi.Configs
 {
     public static class CORS
     {

@@ -4,12 +4,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using AppApi.Entities.Table;
-using AppApi.Repositories.Interfaces;
+using WebApi.Entities.Table;
+using WebApi.Repositories.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace AppApi.Services.Authentication
+namespace WebApi.Services.Authentication
 {
     public interface IUserService
     {

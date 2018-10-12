@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AppApi.Entities.Table
+namespace WebApi.Entities.Table
 {
     public partial class Users
     {

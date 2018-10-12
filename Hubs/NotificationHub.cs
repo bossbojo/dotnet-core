@@ -1,4 +1,4 @@
-using AppApi.Models.ModelSignelR;
+using WebApi.Models.ModelSignelR;
 using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System;
 
-namespace AppApi.Hubs
+namespace WebApi.Hubs
 {
     public class NotificationHub : Hub
     {

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using AppApi.Services;
+using WebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace AppApi.Configs
+namespace WebApi.Configs
 {
     public static class Swagger
     {
@@ -12,7 +12,7 @@ namespace AppApi.Configs
         {
             services.AddSwaggerGen(c =>
             {
-                // var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + "AppApi.XML";
+                // var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + "WebApi.XML";
                 // c.IncludeXmlComments(xmlPath);
                 c.SwaggerDoc("v1", new Info { Title = StaticVariables.ProjectName + " API", Version = "version " + StaticVariables.Version });
                 var security = new Dictionary<string, IEnumerable<string>>
@@ -36,7 +36,7 @@ namespace AppApi.Configs
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", StaticVariables.ProjectName + " API version " + StaticVariables.Version);
-                c.DocumentTitle = "Title Documentation";
+                c.DocumentTitle = "SignalR Microservice API";
                 c.DocExpansion(DocExpansion.None);
             });
         }

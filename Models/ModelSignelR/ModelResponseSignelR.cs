@@ -1,4 +1,4 @@
-namespace AppApi.Models.ModelSignelR
+namespace WebApi.Models.ModelSignelR
 {
     public class ModelResponseSignelR
     {

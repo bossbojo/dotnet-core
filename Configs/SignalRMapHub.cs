@@ -1,7 +1,7 @@
-using AppApi.Hubs;
+using WebApi.Hubs;
 using Microsoft.AspNetCore.Builder;
 
-namespace AppApi.Configs
+namespace WebApi.Configs
 {
     public static class SignalRMapHub
     {

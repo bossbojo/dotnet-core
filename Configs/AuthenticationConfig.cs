@@ -1,11 +1,11 @@
 using System.Text;
-using AppApi.Services.Authentication;
+using WebApi.Services.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace AppApi.Configs
+namespace WebApi.Configs
 {
     public static class AuthenticationConfig
     {

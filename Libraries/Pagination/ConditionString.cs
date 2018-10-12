@@ -1,4 +1,4 @@
-namespace AppApi.Libraries.Pagination
+namespace WebApi.Libraries.Pagination
 {
     public class ConditionString
     {

@@ -1,4 +1,4 @@
-namespace AppApi.Services
+namespace WebApi.Services
 {
     public static class StaticVariables
     {

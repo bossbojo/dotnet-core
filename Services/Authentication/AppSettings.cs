@@ -1,4 +1,4 @@
-namespace AppApi.Services.Authentication
+namespace WebApi.Services.Authentication
 {
     public class AppSettings
     {

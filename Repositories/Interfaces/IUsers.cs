@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using AppApi.Entities.Table;
-using AppApi.Models;
+using WebApi.Entities.Table;
+using WebApi.Models;
 
-namespace AppApi.Repositories.Interfaces
+namespace WebApi.Repositories.Interfaces
 {
     public interface IUsers
     {

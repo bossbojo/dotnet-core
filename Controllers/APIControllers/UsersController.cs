@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
-using AppApi.Libraries.Pagination;
-using AppApi.Models;
-using AppApi.Repositories.Interfaces;
+using WebApi.Libraries.Pagination;
+using WebApi.Models;
+using WebApi.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

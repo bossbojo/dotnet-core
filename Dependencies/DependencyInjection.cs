@@ -1,8 +1,8 @@
-using AppApi.Repositories.Implements;
-using AppApi.Repositories.Interfaces;
+using WebApi.Repositories.Implements;
+using WebApi.Repositories.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AppApi.Dependencies
+namespace WebApi.Dependencies
 {
     public static class DependencyInjection
     {

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace AppApi.Libraries.Pagination
+namespace WebApi.Libraries.Pagination
 {
     public class PaginationAndFilter
     {

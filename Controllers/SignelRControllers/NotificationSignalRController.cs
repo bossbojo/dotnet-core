@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using AppApi.Models;
+using WebApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.SignalR;
-using AppApi.Hubs;
-using AppApi.Models.ModelSignelR;
+using WebApi.Hubs;
+using WebApi.Models.ModelSignelR;
 using Microsoft.AspNetCore.Authorization;
 
-namespace AppApi.Controllers.SignelRControllers
+namespace WebApi.Controllers.SignelRControllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -1,9 +1,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using AppApi.Entities.Table;
-using AppApi.Services;
-namespace AppApi.Libraries.Pagination
+using WebApi.Entities.Table;
+using WebApi.Services;
+namespace WebApi.Libraries.Pagination
 {
     public partial class Context : DbContext
     {

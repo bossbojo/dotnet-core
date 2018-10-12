@@ -10,7 +10,7 @@
 
   <PropertyGroup>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <DocumentationFile>bin\AppApi.XML</DocumentationFile>
+    <DocumentationFile>bin\WebApi.XML</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

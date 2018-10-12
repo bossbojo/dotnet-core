@@ -13,12 +13,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AppApi.Configs;
-using AppApi.Services;
-using AppApi.Dependencies;
+using WebApi.Configs;
+using WebApi.Services;
+using WebApi.Dependencies;
 using Microsoft.AspNetCore.Http;
 
-namespace AppApi
+namespace WebApi
 {
     public class Startup
     {
@@ -50,7 +50,7 @@ namespace AppApi
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            AuthenticationConfig.AuthenticationConfigServices(services,Configuration);
+            AuthenticationConfig.AuthenticationConfigServices(services, Configuration);
 
             CORS.CORSServices(services);
 
@@ -63,7 +63,6 @@ namespace AppApi
         {
             if (env.IsDevelopment()) //Is Development mode
             {
-                Swagger.StartUpSwaggerConfigure(app);
                 app.UseDeveloperExceptionPage();
             }
             else if (env.IsProduction()) //Is Production mode
@@ -74,16 +73,16 @@ namespace AppApi
             {
                 app.UseHsts();
             }
+            Swagger.StartUpSwaggerConfigure(app);
 
-            DefaultFiles.DefaultFilesConfigure(app);
+            DefaultFiles.DefaultFilesConfigure(app, env);
+
             SignalRMapHub.SignalRMapHubConfigure(app);
 
             app.UseAuthentication();
             app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
             app.UseMvc();
-            app.UseRewriter();
-
         }
     }
 }
