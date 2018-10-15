@@ -31,13 +31,14 @@ namespace WebApi
                .AddEnvironmentVariables();
             Configuration = builder.Build();
 
-            StaticVariables.ConnectionString = Configuration.GetConnectionString("ConnectionDB");
-
-            StaticVariables.ProjectName = "SignalR Microservice";
+           //Setting project
+            StaticVariables.ProjectName = "Web API .NET CORE";
 
             StaticVariables.Version = "0.1";
 
-            Console.WriteLine(env.EnvironmentName);
+            StaticVariables.ENV = env.EnvironmentName;
+
+            StaticVariables.ConnectionString = Configuration.GetConnectionString("ConnectionDB");
 
         }
         public IConfiguration Configuration { get; }

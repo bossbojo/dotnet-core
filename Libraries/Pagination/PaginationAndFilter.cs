@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using WebApi.Libraries.Pagination.Installer;
 
 namespace WebApi.Libraries.Pagination
 {
@@ -17,6 +18,7 @@ namespace WebApi.Libraries.Pagination
         public PaginationAndFilter(HttpContext Context)
         {
             _Context = Context;
+            Starter.go();
         }
         //json pagination
         public PaginationJSON queryPaginationJSON(string tableORview_name)

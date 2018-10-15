@@ -20,7 +20,7 @@ namespace NamespaceName
         {
             _IUsers = IUsers_;
         }
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Get()
         {
@@ -50,7 +50,7 @@ namespace NamespaceName
                 return BadRequest(e.Message);
             }
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Post([FromBody] ModelUsers model)
         {

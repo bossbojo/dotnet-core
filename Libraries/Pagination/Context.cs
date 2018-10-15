@@ -9,6 +9,7 @@ namespace WebApi.Libraries.Pagination
     {
         //Your Table
         public virtual DbSet<pagination_json> ReponseJson { get; set; }
+        public virtual DbSet<installer> installer { get; set; }
 
 
         //Configuration for Connection Database
@@ -29,5 +30,10 @@ namespace WebApi.Libraries.Pagination
         public int Id { get; set; }
         public string Item { get; set; }
         public int Count_row { get; set; }
+    }
+     public class installer
+    {
+        public int Id { get; set; }
+        public int count_store { get; set; }
     }
 }
