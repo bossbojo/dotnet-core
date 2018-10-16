@@ -45,11 +45,12 @@ namespace WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
             services.AddDirectoryBrowser();
 
             services.AddSignalR();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             AuthenticationConfig.AuthenticationConfigServices(services, Configuration);
 
@@ -62,6 +63,7 @@ namespace WebApi
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseMvc();
             if (env.IsDevelopment()) //Is Development mode
             {
                 app.UseDeveloperExceptionPage();
@@ -83,7 +85,6 @@ namespace WebApi
             app.UseAuthentication();
             app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
-            app.UseMvc();
         }
     }
 }
