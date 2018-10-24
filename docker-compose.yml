@@ -1,0 +1,33 @@
+version: '3.5'
+
+services:
+  auth-service-dev:
+    image: auth:latest
+    networks: 
+      - all_network
+    ports: 
+      - 4001:80
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+      
+  auth-service-test:
+    image: auth:latest
+    networks: 
+      - all_network
+    ports: 
+      - 4002:80
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Testing
+
+  auth-service-pro:
+    image: auth:latest
+    networks: 
+      - all_network
+    ports: 
+      - 4003:80
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Production
+    command: "ping auth-service-test;ping auth-service-dev"
+
+networks: 
+  all_network:
